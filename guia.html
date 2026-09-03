@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cómo leer el reporte &middot; Survivor 2026</title>
+    <style>
+:root{--tinta:#16181d;--suave:#5b6470;--linea:#e2e5ea;--fondo:#f6f7f9;
+--panel:#fff;--acento:#0f5c3f;--acento-claro:#e6f2ec;--gris:#9aa2ad;
+--alerta:#8a5a00;--alerta-claro:#fdf3e0}
+*{box-sizing:border-box}
+body{margin:0;padding:0 0 3rem;background:var(--fondo);color:var(--tinta);
+font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+-webkit-text-size-adjust:100%}
+.wrap{max-width:44rem;margin:0 auto;padding:0 1rem}
+header{background:var(--acento);color:#fff;padding:1.5rem 0 1.25rem;margin-bottom:1.25rem}
+header .wrap{padding:0 1rem}
+h1{margin:0;font-size:1.25rem;letter-spacing:.01em}
+header .sub{margin:.3rem 0 0;opacity:.85;font-size:.9rem}
+header .sub a{color:#fff}
+section{background:var(--panel);border:1px solid var(--linea);border-radius:10px;
+padding:1rem 1rem 1.15rem;margin:0 0 1rem}
+h2{margin:0 0 .85rem;font-size:1rem;letter-spacing:.02em;text-transform:uppercase;
+color:var(--suave);font-weight:600}
+h3{margin:1.2rem 0 .4rem;font-size:.92rem;color:var(--tinta);font-weight:700}
+section.explica h3:first-of-type{margin-top:0}
+section.explica p{margin:.35rem 0 .7rem;font-size:.93rem}
+.picks{display:flex;flex-wrap:wrap;gap:.75rem}
+.pick-uno{flex:1 1 12rem;background:var(--acento-claro);border-radius:8px;padding:.9rem}
+.pick-uno .equipo{font-size:2rem;font-weight:700;line-height:1;color:var(--acento)}
+.pick-uno .prob{font-size:1.4rem;font-weight:600;margin:.15rem 0 .35rem}
+.pick-uno .detalle{font-size:.88rem;color:var(--suave)}
+.corte{margin-top:.9rem;padding:.7rem .8rem;background:var(--alerta-claro);
+border-left:3px solid var(--alerta);border-radius:0 6px 6px 0}
+.corte-hora{font-weight:600;font-size:.93rem}
+.corte-detalle{margin:.3rem 0 0;font-size:.86rem;color:var(--suave)}
+.tabla-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th{text-align:left;font-weight:600;color:var(--suave);font-size:.78rem;
+text-transform:uppercase;letter-spacing:.03em;padding:.35rem .5rem;
+border-bottom:1px solid var(--linea);white-space:nowrap}
+td{padding:.5rem;border-bottom:1px solid var(--linea);vertical-align:top}
+tr:last-child td{border-bottom:0}
+.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+th.num{text-align:right}
+.eq{font-weight:700}
+tr.optimo{background:var(--acento-claro)}
+tr.optimo .eq{color:var(--acento)}
+tr.aparte{background:#fbfaf6}
+.limite{font-size:.74rem;font-weight:600;color:var(--alerta);margin-top:.15rem}
+tr.doble{background:#fafbfc}
+.sem{font-weight:600;color:var(--suave)}
+.x2{display:inline-block;font-size:.68rem;background:var(--acento);color:#fff;
+padding:0 .3rem;border-radius:3px;font-weight:700}
+.vs{color:var(--suave);font-weight:400;font-size:.85em}
+.excl-mini{font-size:.76rem;color:var(--gris);margin-top:.2rem}
+.tag{display:inline-block;font-size:.7rem;padding:.12rem .4rem;border-radius:3px;
+white-space:nowrap;font-weight:600}
+.tag.mercado{background:var(--acento-claro);color:var(--acento)}
+.tag.modelo{background:#eef0f3;color:var(--suave)}
+tr.gano .eq{color:var(--acento)}
+tr.perdio{background:#fdeeee}
+tr.perdio .eq{color:#a32020}
+.chips{display:flex;flex-wrap:wrap;gap:.35rem}
+.chip{display:inline-block;background:#eef0f3;border-radius:4px;padding:.2rem .45rem;
+font-size:.82rem;font-weight:600;color:var(--suave)}
+ul.reglas,ul.pasos{margin:0;padding-left:1.1rem}
+ul.reglas li,ul.pasos li{margin-bottom:.5rem;font-size:.92rem}
+.advertencia{margin-top:1rem;padding:.8rem;background:#eef0f3;border-radius:6px;
+font-size:.86rem;color:var(--suave)}
+.nota{font-size:.82rem;color:var(--suave);margin:.55rem 0 0}
+.vacio{color:var(--gris);font-style:italic;margin:0}
+.ok{color:var(--acento);margin:0;font-size:.92rem}
+.aviso{margin:0 0 .8rem;padding:.55rem .7rem;background:var(--alerta-claro);
+border-radius:6px;font-size:.88rem}
+footer{text-align:center;color:var(--gris);font-size:.8rem;padding:1.5rem 1rem 0}
+code{background:#eef0f3;padding:.05rem .25rem;border-radius:3px;font-size:.88em}
+@media(max-width:26rem){
+ body{font-size:15px}
+ .pick-uno .equipo{font-size:1.7rem}
+ section{padding:.85rem}
+ td,th{padding:.4rem .35rem}
+}
+section p{font-size:.95rem;margin:.4rem 0 .8rem}
+section ul li{font-size:.94rem;margin-bottom:.45rem}
+h2{text-transform:none;font-size:1.05rem;color:var(--acento);font-weight:700;
+letter-spacing:0}
+h3{margin:1.1rem 0 .3rem;font-size:.93rem}
+header a,footer a{color:#fff;text-decoration:underline}
+footer a{color:var(--acento)}
+dl.glosario{margin:0;font-size:.93rem}
+dl.glosario dt{font-weight:700;margin-top:.7rem;color:var(--acento)}
+dl.glosario dd{margin:.15rem 0 0;color:var(--suave)}
+em{font-style:italic}
+.guia-link{display:inline-block;margin-top:.5rem;font-size:.85rem}
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="wrap">
+        <h1>Cómo leer este reporte
+        </h1>
+        <p class="sub"><a href="index.html">Volver al reporte de la semana 1</a>
+        </p>
+      </div>
+    </header>
+    <div class="wrap">
+      <section>
+        <h2>De qué trata esto
+        </h2>
+        <p>Entramos <strong>una sola entrada</strong> a un pool de <strong>61</strong>.
+Las reglas son simples: cada semana se elige un equipo que creemos que va a ganar. Si
+gana, seguimos. Si pierde o empata, quedamos fuera. Un equipo no se puede repetir en
+toda la temporada. <strong>Gana quien dure más que todos los demás</strong>, y esa
+entrada se lleva la bolsa completa.
+        </p>
+        <p>Cada semana este reporte hace una cosa: <strong>ordenar las opciones</strong> y decir
+cuál conviene más, con números en vez de corazonadas. Toma en cuenta qué tan probable es
+que cada equipo gane, y también qué equipos conviene guardar para más adelante.
+        </p>
+        <p><strong>Lo que el reporte no hace es decidir.</strong> Es una recomendación, no una
+orden. La decisión final la tomamos entre todos por WhatsApp, con el reporte enfrente y
+con lo que cada quien sepa que el modelo no ve.
+        </p>
+      </section>
+      <section>
+        <h2>De dónde salen los números
+        </h2>
+        <h3>Las líneas de apuestas
+        </h3>
+        <p>Cuando una casa de apuestas abre un partido, publica un número llamado
+<strong>moneyline</strong> que dice cuánto paga cada equipo si gana. Ese número no es
+una opinión de una persona: es el resultado de mucha gente apostando dinero real. Si
+alguien sabe algo (una lesión, el clima, un cambio de titular), apuesta, y el número se
+mueve. Por eso es la mejor foto disponible de qué tan probable es cada resultado.
+        </p>
+        <h3>Quitarle el margen a la casa
+        </h3>
+        <p>Hay una trampa: las casas no publican probabilidades limpias. Les suman un margen
+propio, que en el medio se llama <em>vig</em>, y que es de donde sale su ganancia. Si
+sumas las probabilidades que implican sus números, no dan 100% sino algo como 104%. Ese
+4% de más es su comisión. Antes de usar el dato le quitamos ese margen, para quedarnos
+con la probabilidad real y no con la que le conviene a la casa.
+        </p>
+        <h3>Nuestro rating propio
+        </h3>
+        <p>Además tenemos un <strong>rating de fuerza para cada equipo</strong>, del mismo tipo
+que se usa para clasificar jugadores de ajedrez. Funciona así: cada equipo tiene un
+puntaje; cuando gana sube y cuando pierde baja, y sube más si le ganó a un rival fuerte
+o por mucha diferencia. Está construido con todos los resultados de 2022 a 2025, y se
+va ajustando partido a partido durante 2026. También toma en cuenta la ventaja de jugar
+en casa.
+        </p>
+        <h3>La mezcla
+        </h3>
+        <p>Cuando hay línea de apuestas, el número final es <strong>70% mercado y 30% rating
+propio</strong>. Le damos más peso al mercado por una razón sencilla: ahí hay dinero de
+por medio y reacciona en minutos a una lesión o a un cambio de clima. Nuestro rating no
+se entera de nada de eso. El 30% está para aportar memoria de largo plazo, que es lo que
+al mercado a veces le falta en partidos lejanos.
+        </p>
+        <h3>De dónde vienen los datos
+        </h3>
+        <p>El calendario, las líneas de apuestas y los resultados oficiales salen de una base
+pública de estadísticas de la NFL, que recopila lo que publican la liga y las casas. No
+hay nada capturado a mano ni estimado a ojo.
+        </p>
+      </section>
+      <section>
+        <h2>Por qué a veces dice "solo modelo"
+        </h2>
+        <p>Las casas de apuestas solo publican líneas de los partidos cercanos. Hoy hay línea para 6 de los 22 picks de la ruta; a partir de la semana 7 el número sale <strong>solo de nuestro rating</strong>.
+        </p>
+        <p>En el reporte cada semana de la ruta lleva una etiqueta.
+<strong>Apoyado en mercado</strong> significa que hay línea de apuestas: hay dinero
+respaldando esa cifra y es de fiar. <strong>Solo modelo</strong> significa que las casas
+todavía no abren ese partido y el número sale nada más de nuestro rating, calculado con
+lo que pasó el año pasado.
+        </p>
+        <p>Los números de "solo modelo" hay que leerlos con reserva. No saben de lesiones, ni de
+cambios de entrenador, ni de cómo se ve un equipo en noviembre. Van a cambiar, y
+bastante, conforme las casas vayan abriendo esos partidos.
+        </p>
+      </section>
+      <section>
+        <h2>Qué es el "costo" de una alternativa
+        </h2>
+        <p>En la tabla de alternativas, junto a cada equipo hay un porcentaje llamado costo.
+<strong>No es la probabilidad de perder.</strong> Es cuánto empeora nuestra situación
+para el resto de la temporada si elegimos ese equipo en lugar del recomendado.
+        </p>
+        <p>Un ejemplo de esta semana. El recomendado es <strong>LAC</strong>, con 79.4% de ganar. La siguiente mejor opción es <strong>JAX</strong>, con 76.2%, que no está lejos. Aun así, junto a JAX verás un costo de <strong>8.9%</strong>. Eso no quiere decir que JAX vaya a perder: quiere decir que si lo usamos hoy, la probabilidad de llegar hasta el final baja 8.9% respecto a usar LAC. El modelo lo tiene apartado para la semana 12, contra TEN, donde su partido es más fácil.
+        </p>
+        <p>Por eso puede pasar algo que parece raro: <strong>un equipo con buena probabilidad de ganar esta semana puede ser mala idea</strong>, porque lo necesitamos más adelante. Esta semana:
+        </p>
+        <ul>
+          <li><strong>SEA</strong> gana esta semana con 62.2%, pero su costo es 32%: la ruta lo quiere en la semana 10, donde vale 79.7%.
+          </li>
+          <li><strong>LA</strong> gana esta semana con 61.2%, pero su costo es 32%: la ruta lo quiere en la semana 6, donde vale 83.9%.
+          </li>
+        </ul>
+        <p>Cada equipo se usa una sola vez en toda la temporada. Gastarlo hoy es quemarlo para siempre.
+        </p>
+      </section>
+      <section>
+        <h2>Qué es la ruta proyectada
+        </h2>
+        <p>La ruta es el plan completo: qué equipo usar cada semana, de aquí a la 18. En total
+son <strong>22 picks</strong>, porque en las semanas
+15, 16, 17 y 18 hay que elegir <strong>dos equipos y ambos deben ganar</strong>. El modelo
+prueba las combinaciones y se queda con la que da la mayor probabilidad de sobrevivir
+todas las semanas juntas.
+        </p>
+        <p><strong>No es una predicción.</strong> Nadie está diciendo que en la semana 14 vamos a
+usar ese equipo. Es un <strong>presupuesto</strong>: sirve para saber qué guardar y qué
+gastar hoy. Se vuelve a calcular cada semana, con los resultados nuevos y las líneas
+nuevas, y cambia. Lo único que se mantiene es la idea de fondo: no quemar temprano a los
+equipos que tienen partidos fáciles más adelante.
+        </p>
+      </section>
+      <section>
+        <h2>La probabilidad de sobrevivir toda la temporada
+        </h2>
+        <p>En el reporte vas a ver que la ruta completa tiene una probabilidad de <strong>0.16%</strong> de sobrevivir toda la temporada. Sí, es bajísimo. Y es <strong>normal</strong>: son 22 aciertos seguidos, y basta fallar uno para quedar fuera. A las otras 60 entradas les pasa exactamente lo mismo.
+        </p>
+        <p>Por eso <strong>el objetivo real no es llegar a la semana 18</strong>. Es durar más que las otras 60 entradas. Lo más probable es que nadie llegue al final y que la bolsa se decida por quién aguantó más semanas. Ese número sirve para comparar una opción contra otra dentro del reporte, no para estimar de verdad nuestras posibilidades.
+        </p>
+        <p>Un detalle que ya está incluido: en este pool <strong>un empate cuenta como
+derrota</strong>. Las casas de apuestas devuelven el dinero si hay empate, pero el pool
+no perdona, así que las probabilidades del reporte ya descuentan esa posibilidad. Es
+poca cosa (un empate ocurre en aproximadamente 3 de cada 1,000 partidos), pero sobre 22
+picks se acumula, y por eso está considerado.
+        </p>
+      </section>
+      <section>
+        <h2>El rebuy
+        </h2>
+        <p>Si perdemos en las primeras ocho semanas se puede volver a entrar pagando. Cuesta: semana 1: $5,000; semana 2: $5,000; semana 3: $7,500; semana 4: $7,500; semana 5: $7,500; semana 6: $7,500; semana 7: $7,500; semana 8: $9,000. A partir de la semana 9 no hay segunda oportunidad.
+        </p>
+        <p>En el reporte no ponemos la tabla completa, pero el cálculo existe. Dice cuál tendría que ser el tamaño de la bolsa para que volver a pagar valiera la pena. Hoy esa cifra está entre $655,518 y $2,511,474, muy por encima de la bolsa real de este pool. Traducido: <strong>con los números de hoy, recomprar no sale a cuenta</strong>, y recomprar temprano es lo peor de todo, porque vuelves a empezar la temporada con menos equipos disponibles que los demás.
+        </p>
+        <p>Es un cálculo <strong>conservador</strong>: no toma en cuenta que si media liga ya cayó, sobrevivir vale más. Si el caso llega, lo decidimos entre todos y no siguiendo el número a ciegas.
+        </p>
+      </section>
+      <section>
+        <h2>Fechas límite
+        </h2>
+        <p>Cada partido se cierra <strong>30 minutos antes de que
+empiece</strong>. No hay una sola hora para todo: cada equipo tiene la suya, que depende
+de cuándo juega.
+        </p>
+        <p>Esto importa porque no todos los partidos son el domingo. Hay juegos el jueves, a
+veces miércoles o viernes, y partidos internacionales que se juegan muy temprano.
+<strong>Esos equipos sí se pueden elegir</strong>, pero hay que entregar el pick antes de
+que arranquen, no el domingo.
+        </p>
+        <p>Esta semana los que tienen fecha límite más temprana son:
+        </p>
+        <ul>
+          <li><strong>SEA</strong>: antes del miércoles 9 de septiembre, 17:50
+          </li>
+          <li><strong>LA</strong>: antes del jueves 10 de septiembre, 18:05
+          </li>
+          <li><strong>SF</strong>: antes del jueves 10 de septiembre, 18:05
+          </li>
+          <li><strong>NE</strong>: antes del miércoles 9 de septiembre, 17:50
+          </li>
+        </ul>
+        <p>Para el pick de esta semana (LAC) la fecha límite es <strong>domingo 13 de septiembre a las 13:55</strong>, hora de la Ciudad de México.
+        </p>
+      </section>
+      <section>
+        <h2>Lo que este reporte no puede hacer
+        </h2>
+        <p>Para que nadie se lleve una sorpresa, esto es lo que el modelo no sabe:
+        </p>
+        <ul>
+          <li><strong>Trata cada partido como independiente.</strong> Multiplica las
+probabilidades como si un resultado no tuviera nada que ver con el siguiente. En la
+realidad sí se parecen: si un equipo resulta mucho mejor de lo que creíamos, eso afecta
+varias semanas a la vez. Por eso la probabilidad total es aún más optimista de lo que
+parece.
+          </li>
+          <li><strong>La ruta depende de pocos rivales.</strong> Hoy repite mucho a los mismos equipos malos: TEN (5 veces), LV (4 veces). Son 9 de las 22 semanas apostando a que esos equipos sigan siendo tan flojos como creemos. Si alguno resulta mejor de lo esperado, varias semanas se debilitan a la vez.
+          </li>
+          <li><strong>Los números lejanos van a cambiar.</strong> Todo lo que hoy dice "solo
+modelo" se va a recalcular varias veces antes de llegar ahí.
+          </li>
+          <li><strong>No sabe de lesiones de último momento.</strong> Si el quarterback titular se
+lastima el viernes, el modelo se entera tarde o no se entera. Por eso el pick se
+<strong>confirma el sábado</strong>, ya con los reportes de la semana, y no se deja
+cerrado desde el martes.
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h2>Glosario
+        </h2>
+<dl class="glosario">
+<dt>Moneyline</dt><dd>El número que publica una casa de apuestas y que dice cuánto paga
+cada equipo si gana. De ahí se deduce qué tan probable creen que es cada resultado.</dd>
+<dt>Margen o vig</dt><dd>La comisión que la casa le suma a sus números. Hace que las
+probabilidades sumen más de 100%. Se la quitamos antes de usar el dato.</dd>
+<dt>Elo</dt><dd>Nuestro rating de fuerza por equipo. Sube al ganar y baja al perder, y se
+mueve más cuando el resultado es sorpresivo. Viene del ajedrez.</dd>
+<dt>Ventaja de local</dt><dd>El empujón que da jugar en casa. En nuestro rating vale
+alrededor de un punto y medio de marcador, y no se aplica en partidos en cancha
+neutral.</dd>
+<dt>Costo de oportunidad</dt><dd>Lo que pierdes más adelante por usar hoy un equipo que
+te iba a servir después. Es la columna "costo" del reporte.</dd>
+<dt>Semana doble</dt><dd>Las semanas 15, 16, 17 y 18, en las que hay que elegir dos equipos
+y los dos tienen que ganar.</dd>
+<dt>Rebuy</dt><dd>Volver a entrar al pool pagando, después de perder. Solo se puede hasta
+la semana 8.</dd>
+</dl>
+      </section>
+      <footer><a href="index.html">Volver al reporte de la semana 1</a><br>Actualizado el miércoles 2 de septiembre de 2026.
+      </footer>
+    </div>
+  </body>
+</html>
+
